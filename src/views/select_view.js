@@ -10,7 +10,7 @@ SelectView.prototype.bindEvents = function () {
   });
 
   this.selectElement.addEventListener('change', (evt) => {
-    const selectedIndex = evt.target;
+    const selectedIndex = evt.target.value;
     console.log(selectedIndex)
     PubSub.publish('SelectView:change', selectedIndex);
   });

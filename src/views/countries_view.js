@@ -7,7 +7,7 @@ const CountriesView = function (container) {
 
 CountriesView.prototype.bindEvents = function () {
   PubSub.subscribe('Countries:countries-ready', (evt) => {
-   //this.clearList();
+   this.clearList();
   this.renderCountryDetailView(evt.detail);
   });
 };

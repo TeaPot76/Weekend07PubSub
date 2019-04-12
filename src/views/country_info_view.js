@@ -3,10 +3,6 @@ const CountryInfoView = function () {};
 CountryInfoView.prototype.createCountryDetail = function (country) {
   const countryDetail = document.createElement('div');
   countryDetail.classList.add('country-detail');
-  
-  const region = document.createElement('h3');
-  region.textContent = country.region;
-  countryDetail.appendChild(region);
 
   const countryName = document.createElement('h3');
   countryName.textContent = country.name;
