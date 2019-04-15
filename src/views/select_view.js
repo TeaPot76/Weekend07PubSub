@@ -16,11 +16,11 @@ SelectView.prototype.bindEvents = function () {
   });
 };
 
-SelectView.prototype.populateSelect = function (regions) {
-  regions.forEach((region, index) => {
+SelectView.prototype.populateSelect = function (countries) {
+  countries.forEach((region, index) => {
     const option = this.createContinentOption(region, index);
     this.selectElement.appendChild(option);
-  });
+  })
 };
 
 SelectView.prototype.createContinentOption = function (region, index) {

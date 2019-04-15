@@ -4,6 +4,7 @@ const PubSub = require('../helpers/pub_sub.js');
 const Countries = function () {
   this.countriesData = [];
   this.regions= [];
+  this.names = [];
 };
 
 Countries.prototype.bindEvents = function(){
@@ -11,6 +12,22 @@ Countries.prototype.bindEvents = function(){
     const selectedIndex = evt.detail;
     this.publishCountriesByContinent(selectedIndex)
   })
+
+  PubSub.subscribe('SelectCountry: change', (evt)=>{
+    const country = evt.detail;
+   this.publishCountries(country)
+  })
+
+};
+
+
+ Countries.prototype.publishCountries = function (country) {
+  const selected = this.findByName();
+  PubSub.publish('SelectCountry:countries-ready', selected);
+};
+
+Countries.prototype.findByName = function() {
+  return this.countriesData
 };
 
 Countries.prototype.getData = function(){
@@ -46,12 +63,8 @@ Countries.prototype.continentsList = function () {
 
 Countries.prototype.countriesByContinent = function (selectedIndex) {
   const selectedContinent = this.regions[selectedIndex];
-
   return this.countriesData.filter((country) => {
-
-    return country.region === selectedContinent;
-
-
+  return country.region === selectedContinent;
   });
 };
 
@@ -59,6 +72,12 @@ Countries.prototype.publishCountriesByContinent = function (selectedIndex) {
   const foundCountries = this.countriesByContinent(selectedIndex);
   PubSub.publish('Countries:countries-ready', foundCountries);
 };
+
+
+
+
+
+
 
 
 

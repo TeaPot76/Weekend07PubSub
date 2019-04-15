@@ -2,48 +2,37 @@ const PubSub = require('../helpers/pub_sub.js');
 const CountryInfoView = require('./country_info_view');
 
 const CountriesView = function (container) {
-  this.container = container;
+  this.detailContainer = container;
 };
 
 CountriesView.prototype.bindEvents = function () {
-  PubSub.subscribe('Countries:countries-ready', (evt) => {
+  PubSub.subscribe('SelectCountry:countries-ready', (evt) => {
    this.clearList();
-  this.renderCountryDetailView(evt.detail);
-  });
+  this.renderCountriesDetailView(evt.detail);
+});
 };
 
 CountriesView.prototype.clearList = function () {
-  this.container.innerHTML = '';
+  this.detailContainer.innerHTML = '';
 };
 
 
-CountriesView.prototype.renderCountryDetailView = function (countries) {
+
+CountriesView.prototype.renderCountriesDetailView = function (countries) {
     countries.forEach((country) => {
     const countryItem = this.createCountryListItem(country);
     console.log(countryItem)
    this.container.appendChild(countryItem);
   });
 };
-//
-// SelectView.prototype.populate = function (countries) {
-//   countries.forEach((country, index) => {
-//     const countryOption = this.createOption(country.name, index);
-//     this.element.appendChild(countryOption);
-//   });
-// };
 
 CountriesView.prototype.createCountryListItem = function (country) {
-  const countryInfoView = new CountryInfoView();
-  const countryDetail = countryInfoView.createCountryDetail(country);
-  console.log(countryDetail)
-  return countryDetail;
-
+  const countryInfoView2 = new CountryInfoView();
+  const countriesDetail = countryInfoView.createCountryDetail(country);
+  console.log(countriesDetail)
+  return countriesDetail;
 
 };
 
-//
-// CountriesView.prototype.clearList = function () {
-//   this.container.innerHTML = '';
-// };
 
 module.exports = CountriesView;

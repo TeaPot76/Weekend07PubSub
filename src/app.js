@@ -1,5 +1,8 @@
 const Countries = require('./models/countries.js');
 const SelectView = require('./views/select_view.js');
+const ContinentsView = require('./views/continents_view.js');
+const SelectCountry= require('./views/select_country.js');
+
 const CountriesView = require('./views/countries_view.js');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,9 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectView = new SelectView(selectElement);
   selectView.bindEvents();
 
+
   const listContainer = document.querySelector('#country-list');
-  const countriesView = new CountriesView(listContainer);
+  const continentsView = new ContinentsView(listContainer);
+  continentsView.bindEvents();
+
+  const element = document.querySelector('select#country-select');
+  const menuView = new SelectCountry(element);
+  menuView.bindEvents();
+
+  const detailContainer = document.querySelector('#country-detail');
+  const countriesView = new CountriesView(detailContainer);
   countriesView.bindEvents();
+
+
 
   const countries = new Countries;
   countries.bindEvents();
