@@ -1,0 +1,23 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #DCDCDC;
+  margin-left: 15%;
+}
+
+label::after {
+  content: ':';
+}
+
+img {
+  height: 10%;
+  width: 10%;
+}
+
+ul#country-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li.country-list {
+  padding: 0.25em;
+}

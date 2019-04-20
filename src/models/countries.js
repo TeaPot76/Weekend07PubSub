@@ -1,36 +1,20 @@
 const RequestHelper = require('../helpers/request_helper.js');
 const PubSub = require('../helpers/pub_sub.js');
 
-const Countries = function () {
+const Countries = function() {
   this.countriesData = [];
-  this.regions= [];
+  this.regions = [];
   this.names = [];
 };
 
-Countries.prototype.bindEvents = function(){
-  PubSub.subscribe('SelectView:change', (evt)=>{
+Countries.prototype.bindEvents = function() {
+  PubSub.subscribe('SelectView:change', (evt) => {
     const selectedIndex = evt.detail;
     this.publishCountriesByContinent(selectedIndex)
   })
-
-  PubSub.subscribe('SelectCountry: change', (evt)=>{
-    const country = evt.detail;
-   this.publishCountries(country)
-  })
-
 };
 
-
- Countries.prototype.publishCountries = function (country) {
-  const selected = this.findByName();
-  PubSub.publish('SelectCountry:countries-ready', selected);
-};
-
-Countries.prototype.findByName = function() {
-  return this.countriesData
-};
-
-Countries.prototype.getData = function(){
+Countries.prototype.getData = function() {
   const request = new RequestHelper('https://restcountries.eu/rest/v2/all');
   request.get().then((data) => {
     this.countriesData = data;
@@ -38,44 +22,41 @@ Countries.prototype.getData = function(){
     PubSub.publish('Countries:countries-ready', this.countriesData);
     this.publishContinents(data);
   });
-}
+};
 
-Countries.prototype.publishContinents = function (data) {
+Countries.prototype.publishContinents = function(data) {
   this.countriesData = data;
   this.regions = this.continentsList();
   console.log(this.countriesData)
+  console.log(this.regions)
   PubSub.publish('Countries:continents-ready', this.regions);
-}
+};
 
 
-Countries.prototype.list = function () {
+Countries.prototype.list = function() {
   const fullList = this.countriesData.map(country => country.region);
-  console.log(fullList)
   return fullList;
 
-}
+};
 
-Countries.prototype.continentsList = function () {
+Countries.prototype.continentsList = function() {
   return this.list().filter((country, index, array) => {
     return array.indexOf(country) === index;
   });
-}
+};
 
-Countries.prototype.countriesByContinent = function (selectedIndex) {
+Countries.prototype.countriesByContinent = function(selectedIndex) {
   const selectedContinent = this.regions[selectedIndex];
   return this.countriesData.filter((country) => {
-  return country.region === selectedContinent;
+    return country.region === selectedContinent;
   });
 };
 
-Countries.prototype.publishCountriesByContinent = function (selectedIndex) {
+Countries.prototype.publishCountriesByContinent = function(selectedIndex) {
   const foundCountries = this.countriesByContinent(selectedIndex);
+  console.log(foundCountries)
   PubSub.publish('Countries:countries-ready', foundCountries);
 };
-
-
-
-
 
 
 

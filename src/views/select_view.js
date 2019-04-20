@@ -1,10 +1,10 @@
 const PubSub = require('../helpers/pub_sub');
 
-const SelectView = function (selectElement) {
+const SelectView = function(selectElement) {
   this.selectElement = selectElement;
 };
 
-SelectView.prototype.bindEvents = function () {
+SelectView.prototype.bindEvents = function() {
   PubSub.subscribe('Countries:continents-ready', (evt) => {
     this.populateSelect(evt.detail);
   });
@@ -16,14 +16,14 @@ SelectView.prototype.bindEvents = function () {
   });
 };
 
-SelectView.prototype.populateSelect = function (countries) {
+SelectView.prototype.populateSelect = function(countries) {
   countries.forEach((region, index) => {
     const option = this.createContinentOption(region, index);
     this.selectElement.appendChild(option);
   })
 };
 
-SelectView.prototype.createContinentOption = function (region, index) {
+SelectView.prototype.createContinentOption = function(region, index) {
   const option = document.createElement('option');
   option.textContent = region;
   option.value = index;
